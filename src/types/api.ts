@@ -1,4 +1,4 @@
-import { Database } from './supabase'
+// import { Database } from './supabase'
 import { User } from './user'
 import { Team } from './team'
 import { Referral } from './referral'
@@ -157,4 +157,8 @@ export function createApiClient(config: ApiConfig): ApiClient {
     delete: <T>(url: string, options?: Omit<ApiRequestOptions, 'method' | 'url'>) =>
       request<T>({ method: 'DELETE', url, ...options }),
   }
+}
+
+export type _Database = {
+  // ... existing code ...
 } 

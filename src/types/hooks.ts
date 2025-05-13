@@ -5,7 +5,8 @@ import { Domain } from './domain'
 import { StatsSummary, TimeSeriesData } from './stats'
 import { Notification } from './notification'
 import { UserSettings, TeamSettings, AppSettings } from './settings'
-import { ApiResponse, ApiError, PaginatedResponse } from './api'
+// import { ApiResponse, ApiError, PaginatedResponse } from './api'
+import { ApiError, PaginatedResponse } from './api'
 
 export type UseAuthResult = {
   user: User | null

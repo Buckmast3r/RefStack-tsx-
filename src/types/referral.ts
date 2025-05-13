@@ -19,7 +19,7 @@ export interface ReferralCard {
   order: number
   tags?: string[]
   metadata?: {
-    [key: string]: any
+    [key: string]: unknown
   }
 }
 
@@ -39,7 +39,7 @@ export interface CreateReferralCardInput {
   isPublic?: boolean
   tags?: string[]
   metadata?: {
-    [key: string]: any
+    [key: string]: unknown
   }
 }
 
@@ -79,7 +79,7 @@ export interface ReferralFormData {
   image_url?: string
   is_active: boolean
   position: number
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 export interface ReferralValidationError {
