@@ -4,7 +4,7 @@ interface LogMessage {
   level: LogLevel
   message: string
   timestamp: string
-  data?: Record<string, any>
+  data?: Record<string, unknown>
 }
 
 class Logger {
@@ -22,7 +22,7 @@ class Logger {
     return Logger.instance
   }
 
-  private formatMessage(level: LogLevel, message: string, data?: Record<string, any>): LogMessage {
+  private formatMessage(level: LogLevel, message: string, data?: Record<string, unknown>): LogMessage {
     return {
       level,
       message,
@@ -31,7 +31,7 @@ class Logger {
     }
   }
 
-  private log(level: LogLevel, message: string, data?: Record<string, any>) {
+  private log(level: LogLevel, message: string, data?: Record<string, unknown>) {
     const logMessage = this.formatMessage(level, message, data)
 
     if (this.isDevelopment) {
@@ -43,19 +43,19 @@ class Logger {
     }
   }
 
-  public info(message: string, data?: Record<string, any>) {
+  public info(message: string, data?: Record<string, unknown>) {
     this.log('info', message, data)
   }
 
-  public warn(message: string, data?: Record<string, any>) {
+  public warn(message: string, data?: Record<string, unknown>) {
     this.log('warn', message, data)
   }
 
-  public error(message: string, data?: Record<string, any>) {
+  public error(message: string, data?: Record<string, unknown>) {
     this.log('error', message, data)
   }
 
-  public debug(message: string, data?: Record<string, any>) {
+  public debug(message: string, data?: Record<string, unknown>) {
     if (this.isDevelopment) {
       this.log('debug', message, data)
     }

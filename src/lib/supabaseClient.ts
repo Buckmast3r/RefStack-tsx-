@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, AuthError, PostgrestError } from '@supabase/supabase-js'
 import { Database } from '@/types/supabase'
 
 if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
@@ -74,14 +74,37 @@ export class SupabaseError extends Error {
   }
 }
 
-export function handleSupabaseError(error: any): never {
+// Function to check if it's a PostgrestError (has a 'details' property)
+function isPostgrestError(error: unknown): error is PostgrestError {
+  return error && typeof (error as PostgrestError).details !== 'undefined' && typeof (error as PostgrestError).message === 'string' && typeof (error as PostgrestError).code === 'string';
+}
+
+// Function to check if it's an AuthError (often has a 'status' property)
+function isAuthError(error: unknown): error is AuthError {
+    return error && typeof (error as AuthError).message === 'string' && (typeof (error as AuthError).status === 'number' /*|| typeof (error as AuthError).code === 'string'*/); // AuthError might not always have a string code property
+}
+
+export function handleSupabaseError(error: unknown): never {
   console.error('Supabase error:', error)
+  
+  if (isPostgrestError(error)) {
+    throw new SupabaseError(
+      error.message,
+      error.code,
+      error.details
+    )
+  }
+  
+  if (isAuthError(error)) {
+    throw new SupabaseError(
+      error.message,
+      String(error.status) // Using status as code for example
+    )
+  }
   
   if (error instanceof Error) {
     throw new SupabaseError(
-      error.message,
-      (error as any).code,
-      (error as any).details
+      error.message
     )
   }
   
